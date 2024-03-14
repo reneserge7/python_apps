@@ -21,3 +21,4 @@ while True:
         print (f"{index + 1} . {task}")
     case "exit":
       print("Bye")
+      break
