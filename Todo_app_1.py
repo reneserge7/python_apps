@@ -1,14 +1,25 @@
 from datetime import datetime
 
 
-def show(filename):
-    with open(filename, 'r') as file:
-        todos = file.readlines()
-    new_todos = [item.strip('\n') for item in todos]
+def get_todos(filename):
+    with open(filename, 'r') as file1:
+        task = file1.readlines()
+    return task
 
-    for index, task in enumerate(new_todos):
-        task = task.strip('\n')  # inserting a single line to remove \n
-        print(f'{index + 1}.{task}')
+
+def set_todos(filename, todos_agr):
+    with open(filename, 'w') as file1:
+        file1.writelines(todos_agr)
+
+
+def show(filename):
+    with open(filename, 'r') as file1:
+        task = file1.readlines()
+    new_task = [item.strip('\n') for item in task]
+
+    for task_index, task in enumerate(new_task):
+        task = task.strip('\n')  # inserting a line to remove \n
+        print(f'{task_index + 1}.{task}')
 
 
 while True:
@@ -17,8 +28,7 @@ while True:
     if user_action.startswith("add"):
         todo = user_action[4:]
 
-        with open('todo.txt', 'r') as file:
-            todos = file.readlines()
+        todos = get_todos('todo.txt')
         todos.append(todo.upper() + '\n')
 
         with open('todo.txt', 'w') as file:
@@ -33,18 +43,16 @@ while True:
             number = int(input("Enter the number you want to edit:"))
             number = number - 1
 
-            with open("todo.txt", "r") as file:
-                todos = file.readlines()
+            todos = get_todos('todo.txt')
 
             edited = todos[number].strip('\n')
             new_todos = (input("Enter New Task: ")).upper()
             todos[number] = new_todos + '\n'
 
-            with open('todo.txt', 'w') as file:
-                file.writelines(todos)
+            set_todos('todo.txt', todos)
 
-                message = f"Todo {edited} was replaced with {new_todos} from the list"
-                print(message)
+            message = f"Todo {edited} was replaced with {new_todos} from the list"
+            print(message)
         except ValueError:
             print("invalid command")
             continue
@@ -54,23 +62,20 @@ while True:
             show('todo.txt')
             num_comp = int(input("Enter the completed Item num: "))
 
-            with open("todo.txt", "r") as file:
-                todos = file.readlines()
+            todos = get_todos('todo.txt')
             index = num_comp - 1
             todo_to_removed = todos[index].strip('\n')
             todos.pop(index)
 
-            with open('todo.txt', 'w') as file:
-                file.writelines(todos)
+            set_todos('todo.txt', todos)
 
-            with open('todo_completed.txt', 'r') as file:
-                todo_completed = file.readlines()
+            todo_completed = get_todos('todo_completed.txt')
+
             now = datetime.now()
             current_time = now.strftime('%m-%d-%Y %H:%M')
             todo_completed.append(current_time + " " + todo_to_removed.upper() + '\n')
+            set_todos('todo_completed.txt', todo_completed)
 
-            with open('todo_completed.txt', 'w') as file:
-                file.writelines(todo_completed)
         except IndexError:
             print("There is no item with that number.")
             continue
@@ -80,11 +85,12 @@ while True:
         show('todo.txt')
 
     elif user_action.startswith("done"):
-        with open('todo_completed.txt', 'r') as file:
-            file.readlines()
+        # with open('todo_completed.txt', 'r') as file:
+        #     file.readlines()
         show('todo_completed.txt')
     elif user_action.startswith("exit"):
         break
     else:
-        print("Bye!")
-print("Command is invalid!")
+        print("Command is invalid!")
+
+print("Bye!")
