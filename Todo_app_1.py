@@ -2,7 +2,6 @@ from datetime import datetime
 
 
 def show(filename):
-
     with open(filename, 'r') as file:
         todos = file.readlines()
     new_todos = [item.strip('\n') for item in todos]
@@ -21,7 +20,7 @@ while True:
         with open('todo.txt', 'r') as file:
             todos = file.readlines()
         todos.append(todo.upper() + '\n')
-        
+
         with open('todo.txt', 'w') as file:
             file.writelines(todos)
 
@@ -57,7 +56,7 @@ while True:
 
             with open("todo.txt", "r") as file:
                 todos = file.readlines()
-            index = num_comp-1
+            index = num_comp - 1
             todo_to_removed = todos[index].strip('\n')
             todos.pop(index)
 
