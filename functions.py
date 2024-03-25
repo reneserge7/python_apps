@@ -1,3 +1,5 @@
+import re
+
 
 def get_todos(filename="todo.txt"):
     with open(filename, 'r') as file1:
@@ -20,6 +22,15 @@ def show(filename):
     new_task = [item.strip('\n') for item in task]
 
     for task_index, task in enumerate(new_task):
-        task = task.strip('\n')  # inserting a line to remove \n
-        print(f'{task_index + 1}.{task}')
+        task = task.strip('\n')
+        task_only = task.split(',') #inserting a line to remove \n
+        if filename == "todo.txt":
+            final_task = task_only[0]
+        else:
+            final_task = task_only[1]
+        print(f'{task_index + 1}.{final_task}')
 
+
+if __name__ == "__main__":
+    print("Hello")
+    print(get_todos())
