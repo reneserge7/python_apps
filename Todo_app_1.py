@@ -1,6 +1,6 @@
 from datetime import datetime
 import functions
-# CSV glob, webbrouser, shutil
+# CSV glob, webbrowser, shutil
 now = datetime.now()
 current_time = now.strftime('%m-%d-%Y %H:%M')
 
