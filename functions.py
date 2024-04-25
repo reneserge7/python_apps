@@ -8,6 +8,10 @@ def get_todos(filename="todo.txt"):
 
 
 def set_todos(todos_agr, filename="todo.txt"):
+    # if todos_agr == todos:
+    #     filename = "todo.txt"
+    # else:
+    #     filename = "todo_completed.txt"
     with open(filename, 'w') as file1:
         file1.writelines(todos_agr)
 
